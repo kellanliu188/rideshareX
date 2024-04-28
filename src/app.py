@@ -1,5 +1,6 @@
 from db import db
 from flask import Flask
+import json
 
 app = Flask(__name__)
 db_filename = "cms.db"
@@ -12,8 +13,19 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+# generalized response formats
+def success_response(data, code=200):
+    return json.dumps(data), code
+
+
+def failure_response(message, code=404):
+    return json.dumps({"error": message}), code
+
 
 # your routes here
+@app.route("/rideshare/")
+def hello_world():
+    return ("Hello World")
 
 
 if __name__ == "__main__":
