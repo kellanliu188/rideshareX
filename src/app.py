@@ -1,6 +1,7 @@
-from db import db
+from db import db, Users, Rides, Bookings
 from flask import Flask
 import json
+
 
 app = Flask(__name__)
 db_filename = "cms.db"
