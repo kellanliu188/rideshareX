@@ -31,7 +31,6 @@ def failure_response(message, code=404):
 def hello_world():
     return ("Hello World")
 
-<<<<<<< HEAD
 @app.route("/rideshare/rides/")
 def get_all_rides():
     """
@@ -52,7 +51,6 @@ def get_specific_ride(ride_id):
         return failure_response("Ride not found")
     return success_response(ride.serialize())
 
-=======
 #
 @app.route("/rideshare/addtrip/", methods = ["post"])
 def add_ride():
@@ -80,7 +78,6 @@ def add_ride():
     db.session.add(new_ride)
     db.session.commit()
     return success_response(new_ride.serialize(), 201)
->>>>>>> d00726ce3e5241b2331bf415f663dd6fa1071fa2
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
