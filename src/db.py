@@ -20,7 +20,7 @@ class Users(db.Model):
     # Relationship to Rides
     rides = db.relationship('Rides', backref='driver',  cascade="delete")
     # Relationship to Bookings
-    bookings = db.relationship('Booking', backref='passenger', cascade="delete")
+    bookings = db.relationship('Bookings', backref='passenger', cascade="delete")
 
 
     def __init__(self, **kwargs):
@@ -58,7 +58,7 @@ class Rides(db.Model):
     departure_time = db.Column(db.String, nullable=False)
     available_seats = db.Column(db.Integer, nullable=False)
 
-    bookings = db.relationship('Booking', backref='ride', cascade="delete")
+    bookings = db.relationship('Bookings', backref='ride', cascade="delete")
 
     def __init__(self, **kwargs):
         """

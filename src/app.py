@@ -1,5 +1,5 @@
 from db import db, Users, Rides, Bookings
-from flask import Flask
+from flask import Flask, request
 import json
 
 
@@ -28,6 +28,26 @@ def failure_response(message, code=404):
 @app.route("/rideshare/")
 def hello_world():
     return ("Hello World")
+
+@app.route("/rideshare/rides/")
+def get_all_rides():
+    """
+    End point for get all the courses
+    """
+    return success_response({"rides": [
+        rides.serialize() for rides in Rides.query.all()
+    ]})
+
+@app.route("/rideshare/rides/<int:ride_id>/")
+def get_specific_ride(ride_id):
+    """
+    End point for getting specific rides
+    """
+
+    ride = Rides.query.filter_by(ride_id = ride_id).first()
+    if ride is None:
+        return failure_response("Ride not found")
+    return success_response(ride.serialize())
 
 
 if __name__ == "__main__":
