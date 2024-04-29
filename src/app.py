@@ -52,21 +52,20 @@ def get_specific_ride(ride_id):
     return success_response(ride.serialize())
 
 #
-@app.route("/rideshare/addtrip/", methods = ["POST"])
-def add_ride():
+@app.route("/rideshare/addtrip/<int:driver_id>/", methods = ["POST"])
+def add_ride(driver_id):
     """
     add a trip
     """
     body = json.loads(request.data)
-    if "driver_id" not in body or "origin" not in body or "destination" not in body or "departure_time" not in body or "available_seats" not in body:
+    if "origin" not in body or "destination" not in body or "departure_time" not in body or "available_seats" not in body:
         return failure_response("Missing input", 400)
-    driver_id = body.get("driver_id")
     origin = body.get("origin")
     destination = body.get("destination")
     departure_time = body.get("departure_time")
     available_seats = body.get("available_seats")
 
-    if type(driver_id) is not int or type(origin) is not str or type(destination) is not str or type(available_seats) is not str or type(departure_time) is not str :
+    if type(origin) is not str or type(destination) is not str or type(available_seats) is not int or type(departure_time) is not str :
         return failure_response("Incorrect input type", 400)
     
     try:
@@ -74,7 +73,7 @@ def add_ride():
     except ValueError:
         return failure_response("The date and time are not valid.", 400)
     
-    new_ride = Rides(origin=origin, destination=destination, departure_time=departure_time, available_seats=available_seats)
+    new_ride = Rides(driver_id = driver_id, origin=origin, destination=destination, departure_time=departure_time, available_seats=available_seats)
     db.session.add(new_ride)
     db.session.commit()
     return success_response(new_ride.serialize(), 201)
