@@ -54,7 +54,6 @@ class Rides(db.Model):
     available_seats = db.Column(db.Integer, nullable=False)
 
     bookings = db.relationship('Bookings', backref='ride', cascade="delete")
-
     def __init__(self, **kwargs):
         """
         Initialize rides table
@@ -69,10 +68,13 @@ class Rides(db.Model):
         """
         Serialize the ride model
         """
+        driver = Users.query.filter_by(user_id = self.driver_id).first()
 
         return{
             "ride_id": self.ride_id,
             "driver_id": self.driver_id,
+            "driver_first_name": driver.first_name,
+            "driver_last_name": driver.last_name,
             "origin" : self.origin,
             "destination": self.destination,
             "departure_time": self.departure_time,
