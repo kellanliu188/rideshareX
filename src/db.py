@@ -13,9 +13,7 @@ class Users(db.Model):
     username = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    role = db.Column(db.String, nullable=False)
 
     # Relationship to Rides
     rides = db.relationship('Rides', backref='driver',  cascade="delete")
@@ -30,9 +28,7 @@ class Users(db.Model):
         self.username = kwargs.get("username")
         self.first_name = kwargs.get("first_name")
         self.last_name = kwargs.get("last_name")
-        self.email = kwargs.get("email")
         self.password = kwargs.get("password")
-        self.role = kwargs.get("role")
     
     def serialize(self):
 
@@ -40,9 +36,7 @@ class Users(db.Model):
             "id": self.user_id,
             "username": self.username,
             "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            "role": self.role
+            "last_name": self.last_name
         }
 
 class Rides(db.Model):
