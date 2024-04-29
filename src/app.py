@@ -30,6 +30,20 @@ def failure_response(message, code=404):
 def hello_world():
     return ("Hello World")
 
+@app.route("/rideshare/delete/<int:ride_id>/")
+def delete_a_ride(ride_id):
+    """
+    End point for delete a ride
+    """
+
+    ride = Rides.query.filter_by(ride_id = ride_id).first()
+
+    if ride is None:
+        return failure_response("Ride not found")
+    db.session.delete(ride)
+    db.session.commit()
+    return success_response(ride.serialize())
+
 
 @app.route("/rideshare/authenticate/", methods = ["POST"])
 def create_user():
