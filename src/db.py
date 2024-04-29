@@ -14,7 +14,7 @@ class Users(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    
+
     # Relationship to Rides
     rides = db.relationship('Rides', backref='driver',  cascade="delete")
     # Relationship to Bookings
@@ -37,6 +37,7 @@ class Users(db.Model):
             "username": self.username,
             "first_name": self.first_name,
             "last_name": self.last_name,
+
         }
 
 class Rides(db.Model):
