@@ -72,10 +72,6 @@ class Rides(db.Model):
         """
         driver = Users.query.filter_by(id = self.driver_id).first()
 
-        driver = Users.query.filter_by(id = self.driver_id).first()
-        driver = Users.query.filter_by(user_id = self.driver_id).first()
-        driver = Users.query.filter_by(id = self.driver_id).first()
-
         return{
             "ride_id": self.id,
             "driver_id": self.driver_id,
