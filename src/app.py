@@ -109,5 +109,32 @@ def add_ride(driver_id):
     db.session.commit()
     return success_response(new_ride.serialize(), 201)
 
+@app.route("/rideshare/<int:ride_id>/requestride/", methods=["POST"])
+def request_ride(ride_id):
+    """
+    Endpoint for requesting ride by id
+    """
+    # getting request data
+    body = json.loads(request.data)
+    user_id = body.get("user_id")
+    #check for missing fields 
+    if None in (ride_id,user_id):
+        return failure_response("Task not found")
+    # check if ride and user exist
+    ride = Rides.query.filter_by(id=ride_id).first()
+    user = Users.query.filter_by(id=user_id).first()
+    if not ride or not user:
+        return failure_response("Task not found")
+    #check if there are available seats 
+    if ride.available_seats == 0:
+        return failure_response("No available seats")
+    #create new booking if there are seats 
+    time = datetime.now()
+    new_booking = Bookings(ride_id=ride_id,passenger_id=user_id,booking_time=time)
+    ride.available_seats -= 1
+    db.session.add(new_booking)
+    db.session.commit()
+    return success_response(new_booking.serialize())
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
