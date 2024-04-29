@@ -52,7 +52,7 @@ def get_specific_ride(ride_id):
     return success_response(ride.serialize())
 
 #
-@app.route("/rideshare/addtrip/", methods = ["post"])
+@app.route("/rideshare/addtrip/", methods = ["POST"])
 def add_ride():
     """
     add a trip
