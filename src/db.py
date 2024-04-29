@@ -13,14 +13,12 @@ class Users(db.Model):
     username = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    role = db.Column(db.String, nullable=False)
-
+    
     # Relationship to Rides
     rides = db.relationship('Rides', backref='driver',  cascade="delete")
     # Relationship to Bookings
-    bookings = db.relationship('Booking', backref='passenger', cascade="delete")
+    bookings = db.relationship('Bookings', backref='passenger', cascade="delete")
 
 
     def __init__(self, **kwargs):
@@ -30,9 +28,7 @@ class Users(db.Model):
         self.username = kwargs.get("username")
         self.first_name = kwargs.get("first_name")
         self.last_name = kwargs.get("last_name")
-        self.email = kwargs.get("email")
         self.password = kwargs.get("password")
-        self.role = kwargs.get("role")
     
     def serialize(self):
 
@@ -41,8 +37,6 @@ class Users(db.Model):
             "username": self.username,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "email": self.email,
-            "role": self.role
         }
 
 class Rides(db.Model):
@@ -58,7 +52,7 @@ class Rides(db.Model):
     departure_time = db.Column(db.String, nullable=False)
     available_seats = db.Column(db.Integer, nullable=False)
 
-    bookings = db.relationship('Booking', backref='ride', cascade="delete")
+    bookings = db.relationship('Bookings', backref='ride', cascade="delete")
 
     def __init__(self, **kwargs):
         """
