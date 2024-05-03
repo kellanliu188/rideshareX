@@ -90,7 +90,6 @@ def get_all_users():
     '''
     End point for getting all the users
     '''
-
     return success_response({"users":[users.serialize() for users in Users.query.all()]})
 
 @app.route("/rideshare/rides/<int:ride_id>/")
