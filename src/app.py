@@ -5,7 +5,6 @@ import re
 from datetime import datetime
 # comment
 
-
 app = Flask(__name__)
 db_filename = "cms.db"
 
@@ -61,7 +60,7 @@ def create_user():
     
     # authenticating username
     if not username.lower().endswith("@cornell.edu"):
-         return failure_response("Invalid username",400)
+        return failure_response("Invalid username",400)
     
     #checking if a user already exist 
     user = Users.query.filter_by(username=username).first()
@@ -91,8 +90,7 @@ def get_all_users():
     End point for getting all the users
     '''
 
-    return success_response({"users":[
-                                      users.serialize() for users in Users.query.all()]})
+    return success_response({"users":[users.serialize() for users in Users.query.all()]})
 
 @app.route("/rideshare/rides/<int:ride_id>/")
 def get_specific_ride(ride_id):
@@ -174,9 +172,6 @@ def request_ride_by_driver(driver_id):
     for ride in rides_driver:
         rides.append(ride.serialize())
     return success_response({"rides":rides})
-
-
-    
 
 
 if __name__ == "__main__":
