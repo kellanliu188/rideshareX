@@ -70,11 +70,10 @@ class Rides(db.Model):
         """
         Serialize the ride model
         """
-<<<<<<< HEAD
+
         driver = Users.query.filter_by(id = self.driver_id).first()
-=======
         driver = Users.query.filter_by(user_id = self.driver_id).first()
->>>>>>> c6ac79d (add name to Rides serialize)
+        driver = Users.query.filter_by(id = self.driver_id).first()
 
         return{
             "ride_id": self.id,
