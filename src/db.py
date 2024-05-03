@@ -80,8 +80,7 @@ class Rides(db.Model):
             "origin" : self.origin,
             "destination": self.destination,
             "departure_time": self.departure_time,
-            "available_seats": self.available_seats,
-            "bookings": [booking.serialize() for booking in self.bookings]
+            "available_seats": self.available_seats
         }
     
 class Bookings(db.Model):
