@@ -29,7 +29,7 @@ def failure_response(message, code=404):
 def hello_world():
     return ("Hello World")
 
-@app.route("/rideshare/delete/<int:ride_id>/")
+@app.route("/rideshare/delete/<int:ride_id>/", methods=["DELETE"])
 def delete_a_ride(ride_id):
     """
     End point for delete a ride
