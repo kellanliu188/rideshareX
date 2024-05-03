@@ -164,5 +164,20 @@ def request_ride(ride_id):
     print("here5")
     return success_response(new_booking.serialize())
 
+@app.route("/rideshare/<int:driver_id>/")
+def request_ride_by_driver(driver_id):
+    """
+    Endpoint for getting all rides for a driver 
+    """
+    rides=[]
+    rides_driver = Rides.query.filter_by(driver_id=driver_id).all()
+    for ride in rides_driver:
+        rides.append(ride.serialize())
+    return success_response({"rides":rides})
+
+
+    
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
