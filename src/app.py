@@ -30,6 +30,20 @@ def failure_response(message, code=404):
 def hello_world():
     return ("Hello World")
 
+@app.route("/rideshare/delete/<int:ride_id>/")
+def delete_a_ride(ride_id):
+    """
+    End point for delete a ride
+    """
+
+    ride = Rides.query.filter_by(ride_id = ride_id).first()
+
+    if ride is None:
+        return failure_response("Ride not found")
+    db.session.delete(ride)
+    db.session.commit()
+    return success_response(ride.serialize())
+
 
 @app.route("/rideshare/authenticate/", methods = ["POST"])
 def create_user():
@@ -65,7 +79,7 @@ def create_user():
 @app.route("/rideshare/rides/")
 def get_all_rides():
     """
-    End point for get all the courses
+    End point for get all the rides
     """
     return success_response({"rides": [
         rides.serialize() for rides in Rides.query.all()
@@ -135,6 +149,21 @@ def request_ride(ride_id):
     db.session.add(new_booking)
     db.session.commit()
     return success_response(new_booking.serialize())
+
+@app.route("/rideshare/<int:driver_id>/")
+def request_ride_by_driver(driver_id):
+    """
+    Endpoint for getting all rides for a driver 
+    """
+    rides=[]
+    rides_driver = Rides.query.filter_by(driver_id=driver_id).all()
+    for ride in rides_driver:
+        rides.append(ride.serialize())
+    return success_response({"rides":rides})
+
+
+    
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
