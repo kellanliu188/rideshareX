@@ -1,4 +1,6 @@
+
 from flask_sqlalchemy import SQLAlchemy
+from time import strftime
 
 db = SQLAlchemy()
 
@@ -9,7 +11,7 @@ class Users(db.Model):
     Course Model
     """
     __tablename__ = "users"
-    user_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     username = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
@@ -33,7 +35,7 @@ class Users(db.Model):
     def serialize(self):
 
         return {
-            "id": self.user_id,
+            "id": self.id,
             "username": self.username,
             "first_name": self.first_name,
             "last_name": self.last_name,
@@ -46,8 +48,8 @@ class Rides(db.Model):
     """
 
     __tablename__ = "rides"
-    ride_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    driver_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    driver_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     origin = db.Column(db.String, nullable=False)
     destination = db.Column(db.String, nullable=False)
     departure_time = db.Column(db.String, nullable=False)
@@ -68,10 +70,10 @@ class Rides(db.Model):
         """
         Serialize the ride model
         """
-        driver = Users.query.filter_by(user_id = self.driver_id).first()
+        driver = Users.query.filter_by(id = self.driver_id).first()
 
         return{
-            "ride_id": self.ride_id,
+            "ride_id": self.id,
             "driver_id": self.driver_id,
             "driver_first_name": driver.first_name,
             "driver_last_name": driver.last_name,
@@ -88,10 +90,11 @@ class Bookings(db.Model):
     """
 
     __tablename__ = "bookings"
-    booking_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    ride_id = db.Column(db.Integer, db.ForeignKey("rides.ride_id"), nullable=False)
-    passenger_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ride_id = db.Column(db.Integer, db.ForeignKey("rides.id"), nullable=False)
+    passenger_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     booking_time = db.Column(db.DateTime, nullable=False)
+
 
     def __init__(self, **kwargs):
         """
@@ -108,10 +111,10 @@ class Bookings(db.Model):
         """
         rides = Rides.query.filter_by(id=self.ride_id).first()
         return {
-            "booking_id": self.booking_id,
+            "booking_id": self.id,
             "ride_id": self.ride_id,
             "passenger_id": self.passenger_id,
-            "booking_time": self.booking_time,
+            "booking_time": self.booking_time.strftime('%Y/%m'),
             "origin" : rides.origin,
             "destination": rides.destination
         }
