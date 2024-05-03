@@ -35,7 +35,7 @@ def delete_a_ride(ride_id):
     End point for delete a ride
     """
 
-    ride = Rides.query.filter_by(ride_id = ride_id).first()
+    ride = Rides.query.filter_by(id = ride_id).first()
 
     if ride is None:
         return failure_response("Ride not found")
@@ -98,7 +98,7 @@ def get_specific_ride(ride_id):
     End point for getting specific rides
     """
 
-    ride = Rides.query.filter_by(ride_id = ride_id).first()
+    ride = Rides.query.filter_by(id = ride_id).first()
     if ride is None:
         return failure_response("Ride not found")
     return success_response(ride.serialize())
