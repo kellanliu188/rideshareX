@@ -38,6 +38,7 @@ def delete_a_ride(ride_id):
     ride = Rides.query.filter_by(id = ride_id).first()
 
 
+
     if ride is None:
         return failure_response("Ride not found")
     db.session.delete(ride)
