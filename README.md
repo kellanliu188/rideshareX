@@ -46,6 +46,7 @@ This document outlines the API endpoints and functionalities for the RideshareX 
 - **Success Response (200):** Returns a list of rides associated with the driver.
 
 
+
 ## Authors ##
 **Samuel Tawiah**
 **Kellan Liu**
