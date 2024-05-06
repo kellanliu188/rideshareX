@@ -37,6 +37,8 @@ def delete_a_ride(ride_id):
 
     ride = Rides.query.filter_by(id = ride_id).first()
 
+
+
     if ride is None:
         return failure_response("Ride not found")
     db.session.delete(ride)
@@ -89,7 +91,6 @@ def get_all_users():
     '''
     End point for getting all the users
     '''
-
     return success_response({"users":[users.serialize() for users in Users.query.all()]})
 
 @app.route("/rideshare/rides/<int:ride_id>/")
